@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HotKey.cs" />
     <Compile Include="WndRzForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,8 +55,8 @@
     <Compile Include="KeyboardHooker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowDockModel.cs" />
     <Compile Include="WindowResizer.cs" />
+    <Compile Include="WndRzModel.cs" />
     <EmbeddedResource Include="WndRzForm.resx">
       <DependentUpon>WndRzForm.cs</DependentUpon>
     </EmbeddedResource>
