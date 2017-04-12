@@ -49,16 +49,53 @@ namespace WndRz
         private void OnFormLoad(object sender, EventArgs e)
         {
             Visible = false;
-            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Up, OnWindowTop);
-            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Down, OnWindowBottom);
-            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Left, OnWindowLeft);
-            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Right, OnWindowRight);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Up, OnWindowFullTop);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Down, OnWindowFullBottom);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Left, OnWindowFullLeft);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Right, OnWindowFullRight);
+
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Up, OnWindowTop);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Down, OnWindowBottom);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Left, OnWindowLeft);
+            _keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Right, OnWindowRight);
 
             //_keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN | MOD_ALT, Keys.Down, OnWindowBottom);
             //_keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Up, OnWindowTopLeft);
             //_keyboardHooker.Register(Handle, MOD_CONTROL | MOD_WIN, Keys.Down, OnWindowBottomLeft);
             //_keyboardHooker.Register(Handle, MOD_WIN | MOD_ALT, Keys.Up, OnWindowTopRight);
             //_keyboardHooker.Register(Handle, MOD_WIN | MOD_ALT, Keys.Down, OnWindowBottomRight);
+        }
+
+        private void OnWindowFullTop()
+        {
+            RECT rect = _windowResizer.GetCurrentWindowRect();
+            RECT newRect = _model.GetNewFullTopRect(rect);
+            _windowResizer.Resize(newRect);
+            Console.WriteLine("Full top");
+        }
+
+        private void OnWindowFullBottom()
+        {
+            RECT rect = _windowResizer.GetCurrentWindowRect();
+            RECT newRect = _model.GetNewFullBottomRect(rect);
+            _windowResizer.Resize(newRect);
+            Console.WriteLine("Full bottom");
+        }
+
+        private void OnWindowFullLeft()
+        {
+            RECT rect = _windowResizer.GetCurrentWindowRect();
+            RECT newRect = _model.GetNewFullLeftRect(rect);
+            _windowResizer.Resize(newRect);
+            Console.WriteLine("Full left");
+        }
+
+        private void OnWindowFullRight()
+        {
+            RECT rect = _windowResizer.GetCurrentWindowRect();
+            RECT newRect = _model.GetNewFullRightRect(rect);
+            _windowResizer.Resize(newRect);
+            Console.WriteLine("Full right");
         }
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
@@ -79,7 +116,7 @@ namespace WndRz
             RECT rect = _windowResizer.GetCurrentWindowRect();
             RECT newRect = _model.GetNewBottomRect(rect);
             _windowResizer.Resize(newRect);
-            Console.WriteLine("Top");
+            Console.WriteLine("Bottom");
         }
 
         private void OnWindowLeft()
@@ -87,7 +124,7 @@ namespace WndRz
             RECT rect = _windowResizer.GetCurrentWindowRect();
             RECT newRect = _model.GetNewLeftRect(rect);
             _windowResizer.Resize(newRect);
-            Console.WriteLine("Top");
+            Console.WriteLine("Left");
         }
 
         private void OnWindowRight()
@@ -95,38 +132,8 @@ namespace WndRz
             RECT rect = _windowResizer.GetCurrentWindowRect();
             RECT newRect = _model.GetNewRightRect(rect);
             _windowResizer.Resize(newRect);
-            Console.WriteLine("Top");
+            Console.WriteLine("Right");
         }
-
-        //private void OnWindowBottom()
-        //{
-        //    _windowResizer.Resize(0, _screenHeight / 2, _screenWidth, _screenHeight / 2);
-        //    Console.WriteLine("Bottom");
-        //}
-
-        //private void OnWindowTopLeft()
-        //{
-        //    _windowResizer.Resize(0, 0, _screenWidth / 2, _screenHeight / 2);
-        //    Console.WriteLine("TopLeft");
-        //}
-
-        //private void OnWindowBottomLeft()
-        //{
-        //    _windowResizer.Resize(0, _screenHeight / 2, _screenWidth / 2, _screenHeight / 2);
-        //    Console.WriteLine("BottomLeft");
-        //}
-
-        //private void OnWindowTopRight()
-        //{
-        //    _windowResizer.Resize(_screenWidth / 2, 0, _screenWidth / 2, _screenHeight / 2);
-        //    Console.WriteLine("TopRight");
-        //}
-
-        //private void OnWindowBottomRight()
-        //{
-        //    _windowResizer.Resize(_screenWidth / 2, _screenHeight / 2, _screenWidth / 2, _screenHeight / 2);
-        //    Console.WriteLine("BottomRight");
-        //}
 
         private void ClickClose(object sender, EventArgs e)
         {

@@ -51,6 +51,17 @@ namespace WndRz
             return newRect;
         }
 
+        internal RECT GetNewFullTopRect(RECT rect)
+        {
+            RECT newRect = new RECT();
+            newRect.Left = 0;
+            newRect.Top = 0;
+            newRect.Right = _screenWidth;
+            newRect.Bottom = rect.Bottom - rect.Top;
+
+            return newRect;
+        }
+
         internal RECT GetNewBottomRect(RECT rect)
         {
             RECT newRect = new RECT();
@@ -87,10 +98,21 @@ namespace WndRz
             return newRect;
         }
 
+        internal RECT GetNewFullBottomRect(RECT rect)
+        {
+            RECT newRect = new RECT();
+            newRect.Left = 0;
+            newRect.Bottom = _screenHeight;
+            newRect.Right = _screenWidth;
+            newRect.Top = _screenHeight - (rect.Bottom - rect.Top);
+
+            return newRect;
+        }
+
         internal RECT GetNewLeftRect(RECT rect)
         {
             RECT newRect = new RECT();
-            newRect.Bottom= rect.Bottom;
+            newRect.Bottom = rect.Bottom;
             newRect.Top = rect.Top;
             newRect.Left = 0;
 
@@ -119,7 +141,18 @@ namespace WndRz
             {
                 newRect.Right = newRect.Left + _screenWidth / 4;
             }
-            
+
+            return newRect;
+        }
+
+        internal RECT GetNewFullLeftRect(RECT rect)
+        {
+            RECT newRect = new RECT();
+            newRect.Bottom = _screenHeight;
+            newRect.Top = 0;
+            newRect.Left = 0;
+            newRect.Right = rect.Right - rect.Left;
+
             return newRect;
         }
 
@@ -155,6 +188,17 @@ namespace WndRz
             {
                 newRect.Left = newRect.Right - _screenWidth / 4;
             }
+
+            return newRect;
+        }
+
+        internal RECT GetNewFullRightRect(RECT rect)
+        {
+            RECT newRect = new RECT();
+            newRect.Bottom = _screenHeight;
+            newRect.Top = 0;
+            newRect.Right = _screenWidth;
+            newRect.Left = _screenWidth - (rect.Right - rect.Left);
 
             return newRect;
         }
