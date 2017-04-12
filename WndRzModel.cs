@@ -23,11 +23,7 @@ namespace WndRz
             newRect.Right = rect.Right;
 
             int height = rect.Bottom - rect.Top;
-            if (height < _screenHeight / 4)
-            {
-                newRect.Bottom = newRect.Top + _screenHeight / 4;
-            }
-            else if (height < _screenHeight / 3)
+            if (height < _screenHeight / 3)
             {
                 newRect.Bottom = newRect.Top + _screenHeight / 3;
             }
@@ -45,7 +41,7 @@ namespace WndRz
             }
             else
             {
-                newRect.Bottom = newRect.Top + _screenHeight / 4;
+                newRect.Bottom = newRect.Top + _screenHeight / 3;
             }
 
             return newRect;
@@ -70,11 +66,7 @@ namespace WndRz
             newRect.Right = rect.Right;
 
             int height = rect.Bottom - rect.Top;
-            if (height < _screenHeight / 4)
-            {
-                newRect.Top = newRect.Bottom - _screenHeight / 4;
-            }
-            else if (height < _screenHeight / 3)
+            if (height < _screenHeight / 3)
             {
                 newRect.Top = newRect.Bottom - _screenHeight / 3;
             }
@@ -92,7 +84,7 @@ namespace WndRz
             }
             else
             {
-                newRect.Top = newRect.Bottom - _screenHeight / 4;
+                newRect.Top = newRect.Bottom - _screenHeight / 3;
             }
 
             return newRect;
@@ -117,11 +109,7 @@ namespace WndRz
             newRect.Left = 0;
 
             int width = rect.Right - rect.Left;
-            if (width < _screenWidth / 4)
-            {
-                newRect.Right = newRect.Left + _screenWidth / 4;
-            }
-            else if (width < _screenWidth / 3)
+            if (width < _screenWidth / 3)
             {
                 newRect.Right = newRect.Left + _screenWidth / 3;
             }
@@ -139,7 +127,7 @@ namespace WndRz
             }
             else
             {
-                newRect.Right = newRect.Left + _screenWidth / 4;
+                newRect.Right = newRect.Left + _screenWidth / 3;
             }
 
             return newRect;
@@ -164,11 +152,7 @@ namespace WndRz
             newRect.Right = _screenWidth;
 
             int width = rect.Right - rect.Left;
-            if (width < _screenWidth / 4)
-            {
-                newRect.Left = newRect.Right - _screenWidth / 4;
-            }
-            else if (width < _screenWidth / 3)
+            if (width < _screenWidth / 3)
             {
                 newRect.Left = newRect.Right - _screenWidth / 3;
             }
@@ -186,7 +170,7 @@ namespace WndRz
             }
             else
             {
-                newRect.Left = newRect.Right - _screenWidth / 4;
+                newRect.Left = newRect.Right - _screenWidth / 3;
             }
 
             return newRect;
