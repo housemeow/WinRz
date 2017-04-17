@@ -6,6 +6,12 @@ namespace WndRz
 {
     internal class WindowResizer
     {
+        public const int SW_HIDE = 0; // 完全消失 
+        public const int SW_SHOWNORMAL = 1; // 正常狀態 
+        public const int SW_SHOWMINIMIZED = 2; // 縮小 
+        public const int SW_SHOWMAXIMIZED = 3; // 全螢幕 
+        private RECT workingBound;
+
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
@@ -15,6 +21,16 @@ namespace WndRz
             public int Bottom;      // y position of lower-right corner
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct TagWindowPlacement
+        {
+            public uint length;
+            public uint flags;
+            public uint showCmd;
+            public Point ptMinPosition;
+            public Point ptMaxPosition;
+            public RECT rcNormalPosition;
+        }
 
         private static WindowResizer _windowResizer;
 
@@ -30,6 +46,12 @@ namespace WndRz
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowPlacement(IntPtr hWnd, out TagWindowPlacement lpwndpl);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref TagWindowPlacement lpwndpl);
+
         private WindowResizer() { }
 
         internal static WindowResizer GetInstance()
@@ -42,10 +64,17 @@ namespace WndRz
             return _windowResizer;
         }
 
-        internal void Resize(int x, int y, int width, int height)
+        internal void PreventMaximizedWindow(IntPtr handle)
         {
-            IntPtr currentHWnd = GetForegroundWindow();
-            MoveWindow(currentHWnd, x, y, width, height, true);
+            TagWindowPlacement windowPlacement;
+            GetWindowPlacement(handle, out windowPlacement);
+
+            if (windowPlacement.showCmd == SW_SHOWMAXIMIZED)
+            {
+                windowPlacement.showCmd = SW_SHOWNORMAL;
+            }
+
+            SetWindowPlacement(handle, ref windowPlacement);
         }
 
         internal RECT GetCurrentWindowRect()
@@ -58,10 +87,11 @@ namespace WndRz
 
         internal void Resize(RECT newRect)
         {
-            IntPtr currentHWnd = GetForegroundWindow();
+            IntPtr currentHandle = GetForegroundWindow();
+            PreventMaximizedWindow(currentHandle);
             int width = newRect.Right - newRect.Left;
             int height = newRect.Bottom - newRect.Top;
-            MoveWindow(currentHWnd, newRect.Left, newRect.Top, width, height, true);
+            MoveWindow(currentHandle, newRect.Left, newRect.Top, width, height, true);
         }
     }
 }

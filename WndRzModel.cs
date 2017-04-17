@@ -15,6 +15,15 @@ namespace WndRz
             _screenHeight = screenHeight;
         }
 
+        private RECT Trim(RECT rect)
+        {
+            rect.Left = rect.Left > 0 ? rect.Left : 0;
+            rect.Top = rect.Top > 0 ? rect.Top : 0;
+            rect.Bottom = rect.Bottom < _screenHeight ? rect.Bottom : _screenHeight;
+            rect.Right = rect.Right < _screenWidth ? rect.Right : _screenWidth;
+            return rect;
+        }
+
         internal RECT GetNewTopRect(RECT rect)
         {
             RECT newRect = new RECT();
@@ -44,6 +53,7 @@ namespace WndRz
                 newRect.Bottom = newRect.Top + _screenHeight / 3;
             }
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -55,6 +65,7 @@ namespace WndRz
             newRect.Right = _screenWidth;
             newRect.Bottom = rect.Bottom - rect.Top;
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -87,6 +98,7 @@ namespace WndRz
                 newRect.Top = newRect.Bottom - _screenHeight / 3;
             }
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -98,6 +110,7 @@ namespace WndRz
             newRect.Right = _screenWidth;
             newRect.Top = _screenHeight - (rect.Bottom - rect.Top);
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -130,6 +143,7 @@ namespace WndRz
                 newRect.Right = newRect.Left + _screenWidth / 3;
             }
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -141,6 +155,7 @@ namespace WndRz
             newRect.Left = 0;
             newRect.Right = rect.Right - rect.Left;
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -173,6 +188,7 @@ namespace WndRz
                 newRect.Left = newRect.Right - _screenWidth / 3;
             }
 
+            newRect = Trim(newRect);
             return newRect;
         }
 
@@ -184,6 +200,7 @@ namespace WndRz
             newRect.Right = _screenWidth;
             newRect.Left = _screenWidth - (rect.Right - rect.Left);
 
+            newRect = Trim(newRect);
             return newRect;
         }
     }
